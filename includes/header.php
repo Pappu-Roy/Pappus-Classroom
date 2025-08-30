@@ -19,7 +19,7 @@
 <body class="bg-gray-100 text-gray-800 min-h-screen flex flex-col">
 
 <!-- Mobile-Responsive Navigation Bar -->
-<nav class="bg-gray-800 p-4 shadow-lg">
+<nav class="bg-indigo-950 p-4 shadow-lg">
     <div class="container mx-auto flex justify-between items-center">
         <!-- Logo/Site Title -->
         <a href="index.php" class="text-white text-2xl font-bold">Student Hub</a>

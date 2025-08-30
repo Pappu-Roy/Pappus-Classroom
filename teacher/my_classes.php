@@ -1,5 +1,5 @@
 <?php
-// FILE: teacher/my_classes.php
+// FILE: teacher/my_classes.php (UPDATED)
 
 // Start the session
 session_start();
@@ -30,51 +30,42 @@ $classes_result = $classes_stmt->get_result();
 
 ?>
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Classes</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-    <style>
-        body { font-family: 'Inter', sans-serif; }
-    </style>
-</head>
-<body class="bg-gray-100 text-gray-800">
-
-    <div class="container mx-auto p-6 mt-8">
-        <h1 class="text-4xl font-bold text-center mb-8">My Classes</h1>
-        
-        <div class="bg-white p-8 rounded-2xl shadow-md overflow-x-auto">
-            <h2 class="text-2xl font-bold mb-4">Classes I Teach</h2>
-            <table class="min-w-full divide-y divide-gray-200">
-                <thead class="bg-gray-50">
-                    <tr>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Class Name</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
-                    </tr>
-                </thead>
-                <tbody class="bg-white divide-y divide-gray-200">
-                    <?php if ($classes_result->num_rows > 0): ?>
-                        <?php while ($class = $classes_result->fetch_assoc()): ?>
-                            <tr>
-                                <td class="px-6 py-4 whitespace-nowrap"><?php echo htmlspecialchars($class['class_name']); ?></td>
-                                <td class="px-6 py-4 whitespace-nowrap">
-                                    <a href="manage_grades.php?class_id=<?php echo htmlspecialchars($class['id']); ?>"
-                                       class="text-blue-600 hover:text-blue-800 font-semibold transition duration-300">Manage Grades</a>
-                                </td>
-                            </tr>
-                        <?php endwhile; ?>
-                    <?php else: ?>
+<div class="container mx-auto p-6 mt-8">
+    <h1 class="text-4xl font-bold text-center mb-8">My Classes</h1>
+    
+    <div class="bg-white p-8 rounded-2xl shadow-md overflow-x-auto">
+        <h2 class="text-2xl font-bold mb-4">Classes I Teach</h2>
+        <table class="min-w-full divide-y divide-gray-200">
+            <thead class="bg-gray-50">
+                <tr>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Class Name</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                </tr>
+            </thead>
+            <tbody class="bg-white divide-y divide-gray-200">
+                <?php if ($classes_result->num_rows > 0): ?>
+                    <?php while ($class = $classes_result->fetch_assoc()): ?>
                         <tr>
-                            <td colspan="2" class="px-6 py-4 whitespace-nowrap text-center text-gray-500">You are not assigned to any classes.</td>
+                            <td class="px-6 py-4 whitespace-nowrap"><?php echo htmlspecialchars($class['class_name']); ?></td>
+                            <td class="px-6 py-4 whitespace-nowrap space-x-2">
+                                <a href="manage_grades.php?class_id=<?php echo htmlspecialchars($class['id']); ?>"
+                                   class="text-blue-600 hover:text-blue-800 font-semibold transition duration-300">Manage Grades</a>
+                                <span class="text-gray-400">|</span>
+                                <a href="assign_students.php?class_id=<?php echo htmlspecialchars($class['id']); ?>"
+                                   class="text-purple-600 hover:text-purple-800 font-semibold transition duration-300">Assign Students</a>
+                                <span class="text-gray-400">|</span>
+                                <a href="classroom.php?class_id=<?php echo htmlspecialchars($class['id']); ?>"
+                                   class="text-green-600 hover:text-green-800 font-semibold transition duration-300">Classroom</a>
+                            </td>
                         </tr>
-                    <?php endif; ?>
-                </tbody>
-            </table>
-        </div>
+                    <?php endwhile; ?>
+                <?php else: ?>
+                    <tr>
+                        <td colspan="2" class="px-6 py-4 whitespace-nowrap text-center text-gray-500">You are not assigned to any classes.</td>
+                    </tr>
+                <?php endif; ?>
+            </tbody>
+        </table>
     </div>
-</body>
-</html>
+</div>
+

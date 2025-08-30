@@ -4,7 +4,7 @@
 // Start the session to store user data
 session_start();
 
-// Include the database connection file and the reusable header
+// Include the database connection file
 require_once 'includes/db_connect.php';
 require_once 'includes/header.php';
 
@@ -22,7 +22,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $password = $_POST['password'];
 
     // Prepare a statement to prevent SQL injection
-    $stmt = $conn->prepare("SELECT id, email, password, role FROM users WHERE email = ?");
+    $stmt = $conn->prepare("SELECT id, first_name, last_name, email, password, role FROM users WHERE email = ?");
     $stmt->bind_param("s", $email);
     $stmt->execute();
     $result = $stmt->get_result();
@@ -34,6 +34,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             // Password is correct, so start a new session
             $_SESSION['user_id'] = $user['id'];
             $_SESSION['user_role'] = $user['role'];
+            $_SESSION['first_name'] = $user['first_name']; // Save the first name to the session
+            $_SESSION['last_name'] = $user['last_name'];   // Save the last name to the session
 
             // Redirect to the general dashboard which then redirects to the specific role page
             header("Location: dashboard.php");
@@ -47,13 +49,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $error_message = "Invalid email or password.";
     }
 
-    // Close the statement and connection
     $stmt->close();
-    $conn->close();
 }
+
+$conn->close();
 ?>
 
-<div class="bg-gray-100 flex items-center justify-center flex-grow">
+<div class="bg-gray-100 flex items-center justify-center min-h-screen">
     <div class="bg-white p-8 rounded-2xl shadow-lg w-full max-w-sm">
         <h2 class="text-2xl font-bold text-center mb-6">Log in to your account</h2>
         
@@ -83,7 +85,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </form>
     </div>
 </div>
-
 <?php
 require_once 'includes/footer.php';
 ?>
